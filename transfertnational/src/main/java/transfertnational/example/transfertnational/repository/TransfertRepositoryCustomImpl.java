@@ -28,11 +28,11 @@ public class TransfertRepositoryCustomImpl implements TransfertRepositoryCustom 
 
         List<Predicate> predicates = new ArrayList<Predicate>();
         if (idAgent != null)
-            predicates.add(cb.like(transferts.get("idAgent"), idAgent.toString()+'%'));
+            predicates.add(cb.equal(transferts.get("idAgent"), idAgent));
         
         
         if (idClient != null)
-            predicates.add(cb.like(transferts.get("idClient"), idClient.toString()+'%'));
+            predicates.add(cb.equal(transferts.get("idClient"), idClient));
        
         if (pi != null)
             predicates.add(cb.like(transferts.get("pi"), pi.toString()+'%'));

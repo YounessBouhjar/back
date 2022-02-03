@@ -3,6 +3,8 @@ package com.example.beneficiaire.controller;
 import com.example.beneficiaire.exception.BeneficiaireNotFoundException;
 import com.example.beneficiaire.model.Beneficiaire;
 import com.example.beneficiaire.service.BeneficiaireService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/beneficiaire")
 public class BeneficiaireController {
-
+	@Autowired
     private final BeneficiaireService beneficiaireService;
 
     public BeneficiaireController(BeneficiaireService beneficiaireService) {
@@ -40,5 +42,11 @@ public class BeneficiaireController {
     public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) throws Exception{
         beneficiaireService.deleteBeneficiaire(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @GetMapping("/findid/{id}")
+    public ResponseEntity<Beneficiaire> getBeneficiaire (@PathVariable("id") Long id) {
+        Beneficiaire benef = beneficiaireService.findBeneficiaireById(id);
+        return new ResponseEntity<>(benef, HttpStatus.OK);
     }
 }

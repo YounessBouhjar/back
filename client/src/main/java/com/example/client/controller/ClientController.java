@@ -12,9 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
-@RequestMapping("client")
+@RequestMapping("/client")
 public class ClientController {
     private final ClientService clientService;
     @Autowired
@@ -35,14 +37,19 @@ public class ClientController {
         Client client1 = clientService.addClient(client);
         return new ResponseEntity<>(client1, HttpStatus.CREATED);
     }
-    @GetMapping("/find/{gsm}")
+    @GetMapping("/findgsm/{gsm}")
     public ResponseEntity<Client> findClientByGSM(@PathVariable("gsm") String gsm){
         Client client=clientService.findClientBynumGSM(gsm);
         return new ResponseEntity<>(client,HttpStatus.OK);
     }
-    @GetMapping("/find/{cin}")
+    @GetMapping("/findcin/{cin}")
     public ResponseEntity<Client> findClientByCin(@PathVariable("cin") String cin){
         Client client=clientService.findClientByCin(cin);
+        return new ResponseEntity<>(client,HttpStatus.OK);
+    }
+    @GetMapping("/findid/{id}")
+    public ResponseEntity<Client> findClientById(@PathVariable("id") Long id){
+        Client client=clientService.findClientById(id);
         return new ResponseEntity<>(client,HttpStatus.OK);
     }
     @GetMapping("/beneficiaire/all")

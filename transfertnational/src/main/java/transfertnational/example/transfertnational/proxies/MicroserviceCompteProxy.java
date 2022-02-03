@@ -16,8 +16,11 @@ public interface MicroserviceCompteProxy {
     ResponseEntity<List<CompteBean>> getAllCompte ();
     @GetMapping("/find/{numCompte}")
     ResponseEntity<CompteBean> findCompteBynumCompte(@PathVariable("numCompte") String numCompte);
-    @PutMapping("update/{id}/{solde}")
-    public ResponseEntity<CompteBean> updateCompte(@PathVariable("id") Long id,@PathVariable("solde") float solde);
+    @PutMapping("debiter/{id}/{solde}")
+    ResponseEntity<CompteBean> debiterCompte(@PathVariable("id") Long id,@PathVariable("solde") float solde);
+    @PutMapping("crediter/{id}/{solde}")
+    ResponseEntity<CompteBean> crediterCompte(@PathVariable("id") Long id,@PathVariable("solde") float solde);
+
 
 
 }

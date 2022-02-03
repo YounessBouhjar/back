@@ -38,7 +38,7 @@ public class AgentController {
         return new ResponseEntity<List<Agent>>(agents, HttpStatus.OK);
     }
 
-    @GetMapping("/agent/{email}")
+    @GetMapping("/{email}")
     public ResponseEntity<Agent> getAgentByEmail (@PathVariable("email") String email) {
         Agent agent=agentService.getAgentByEmail(email);
         return new ResponseEntity<Agent>(agent,HttpStatus.OK);

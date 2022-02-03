@@ -17,9 +17,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-
-
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -86,7 +84,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 		// will fail with 403 Invalid CORS request
 		configuration.setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration);
+		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 		return source;
 	}
 
@@ -99,14 +97,15 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 
 			
-			.antMatchers(HttpMethod.GET,"/client/find/{gsm}").permitAll() 		//client par gsm
+			.antMatchers(HttpMethod.GET,"/client/findgsm/{gsm}").permitAll() 		//client par gsm
 			.antMatchers(HttpMethod.GET,"/client/all").permitAll()		//afficher clients
 			.antMatchers(HttpMethod.POST,"/client/add").permitAll()	//creer clients
-			.antMatchers(HttpMethod.GET,"/client/find/{cin}").permitAll()	//client par cin
+			.antMatchers(HttpMethod.GET,"/client/findcin/{cin}").permitAll()	//client par cin
 			.antMatchers(HttpMethod.GET,"/client/beneficiaire/all").permitAll()	//benef client
 			.antMatchers(HttpMethod.PUT,"/client/updateClient/{clientId}").permitAll()	//benef client
+			.antMatchers(HttpMethod.GET,"/client/findid/{id}").permitAll()	//benef client
 
-			
+
 			.and()
 			.httpBasic()
 			.and()

@@ -39,11 +39,20 @@ public class CompteController {
         Compte compte=compteService.getCompteByNumero(nomClient);
         return new ResponseEntity<>(compte,HttpStatus.OK);
     }
-    @PutMapping("update/{id}/{solde}")
+
+    //debiter le compte
+    @PutMapping("debiter/{id}/{solde}")
     public ResponseEntity<Compte> updateCompte(@PathVariable("id") Long id,@PathVariable("solde") float solde){
-       Compte compte= compteService.updateCompte(id,solde);
+       Compte compte= compteService.debiterCompte(id,solde);
         return new ResponseEntity<>(compte,HttpStatus.OK);
     }
+    //crediter le compte
+    @PutMapping("crediter/{id}/{solde}")
+    public ResponseEntity<Compte> crediterCompte(@PathVariable("id") Long id,@PathVariable("solde") float solde){
+        Compte compte= compteService.crediterCompte(id,solde);
+        return new ResponseEntity<>(compte,HttpStatus.OK);
+    }
+
 
 
 

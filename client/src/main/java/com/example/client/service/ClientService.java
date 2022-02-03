@@ -9,11 +9,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
-    private final ClientRepository clientRepository;
     @Autowired
+	private final ClientRepository clientRepository;
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
@@ -28,11 +29,14 @@ public class ClientService {
     public Client findClientBynumGSM(String numGSM){
         return clientRepository.findBynumGSM(numGSM);
     }
+    public Client findClientById(Long id){
+        return clientRepository.findByClientId(id);
+    }
     public Client findClientByCin(String cin){
         return clientRepository.findBycin(cin);
     }
     public Client updateClient(Long id,Client client)throws ClientNotFoundException {
-    	Client clientFromDB = clientRepository.findByClientId(id).orElse(null);
+    	Client clientFromDB = clientRepository.findByClientId(id);
         if (clientFromDB == null)
             throw new ClientNotFoundException("aucun client avec cette id");
         client.setClientId(clientFromDB.getClientId());

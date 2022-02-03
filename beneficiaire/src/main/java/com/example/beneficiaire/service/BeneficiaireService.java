@@ -11,10 +11,9 @@ import java.util.List;
 
 @Service
 public class BeneficiaireService {
-
+    @Autowired
     private final BeneficiaireRepository beneficiaireRepository;
 
-    @Autowired
     public BeneficiaireService(BeneficiaireRepository beneficiaireRepository) {
         this.beneficiaireRepository = beneficiaireRepository;
     }

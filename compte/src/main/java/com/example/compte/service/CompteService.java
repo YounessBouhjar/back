@@ -62,12 +62,22 @@ public class CompteService {
     public Compte findCompteById(Long id){
         return compteRepository.findCompteById(id);
     }
-    ///update solde
-    public Compte updateCompte(Long id,float solde){
+    ///crediter le compte
+    public Compte crediterCompte(Long id,float solde){
         Compte compte=compteRepository.findCompteById(id);
-        compte.setSolde(solde);
+        float newSolde=compte.getSolde()-solde;
+        compte.setSolde(newSolde);
         compteRepository.save(compte);
         return compte;
     }
+    ///debiter le compte
+    public Compte debiterCompte(Long id,float solde){
+        Compte compte=compteRepository.findCompteById(id);
+        float newSolde=compte.getSolde()+solde;
+        compte.setSolde(newSolde);
+        compteRepository.save(compte);
+        return compte;
+    }
+
 
 }

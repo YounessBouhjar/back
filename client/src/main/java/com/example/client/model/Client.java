@@ -23,7 +23,6 @@ public class Client {
     private String nom;
     @Column(nullable = false)
     private String cin;
-    @Column(nullable = false)
     private String numGSM;
     private String titre;
     private String typePI;

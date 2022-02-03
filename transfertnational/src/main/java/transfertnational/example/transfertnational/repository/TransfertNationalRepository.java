@@ -13,7 +13,8 @@ public interface TransfertNationalRepository extends JpaRepository<TransfertNati
      List<TransfertNational> findTransfertNationalByIdBeneficiaire(Long idBeneficiaire);
      List<TransfertNational> findTransfertNationalByIdClientAndIdBeneficiaire(Long idClient,Long idBeneficiaire);
      TransfertNational findTransfertNationalById(Long id);
-     
+     TransfertNational findTransfertNationalByCodeTransfert(String codeTransfert);
+
    
 }
 

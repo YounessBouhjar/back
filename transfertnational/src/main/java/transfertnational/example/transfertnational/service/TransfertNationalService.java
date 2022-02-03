@@ -1,14 +1,20 @@
 package transfertnational.example.transfertnational.service;
 
-import org.springframework.data.jpa.repository.Query;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+
 import transfertnational.example.transfertnational.model.TransfertNational;
 import transfertnational.example.transfertnational.repository.TransfertNationalRepository;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,7 +46,17 @@ public class TransfertNationalService {
     }
     ////add transfert
     public TransfertNational addTransfert(TransfertNational transfertNational){
-        return transfertNationalRepository.save(transfertNational);
+    	TransfertNational transfert = transfertNationalRepository.save(transfertNational);
+    	Long id = transfert.getId();
+    	transfert.setCodeTransfert("837"+id.toString()+RandomStringUtils.random(10- id.toString().length(),false,true));
+
+    	Date currentUtilDate = new Date();
+//    	Timestamp ts=new Timestamp(currentUtilDate.getTime()); 
+//    	SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+//    	transfert.setDateTransfert(formatter.format(currentUtilDate).toString());
+    	transfert.setDateTransfert(currentUtilDate);
+    	transfert.setStatus("à servir");
+    	return transfertNationalRepository.save(transfert);
     }
     ///update nombre jours
     public TransfertNational updateTransfertNombreJours(Long id,int nombreJours){
@@ -60,7 +76,22 @@ public class TransfertNationalService {
         return transfertNationalRepository.findTransfertNationalByIdAgentAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(
         		idAgent, idClient,pi, numGsm, codeTransfert, status);
     }
+    public TransfertNational GetTransfertNationalByCodeTransfert(String codeTransfert){
+        return transfertNationalRepository.findTransfertNationalByCodeTransfert(codeTransfert);
+    }
     
+
+    
+    public TransfertNational updateTransfert(String codeTransfert,String status,String motif){
+        TransfertNational transfertNational= transfertNationalRepository.findTransfertNationalByCodeTransfert(codeTransfert);        
+         transfertNational.setStatus(status);
+         transfertNational.setMotif(motif);
+        return transfertNationalRepository.save(transfertNational);
+    }
+    
+    
+    
+
 }
 
 
