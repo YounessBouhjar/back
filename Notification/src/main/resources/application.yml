@@ -1,4 +1,7 @@
 twilio:
   account_sid: ACdff30e6007318b17118ea641b70f2861
-  auth_token: 5036cbf279836bd757b0f28c05c6e595
+  auth_token: 9fe5d8e9e3b3623a7b8cb19d66573e0e
   trial_number: +18063045449
+eureka:
+  instance:
+    appname:  notification-service

@@ -18,7 +18,7 @@ public class Controller {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/send")
     public void sendSms(@Valid @RequestBody SmsRequest smsRequest) {
         service.sendSms(smsRequest);
     }
