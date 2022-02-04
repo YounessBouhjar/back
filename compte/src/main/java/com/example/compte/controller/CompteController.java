@@ -3,16 +3,22 @@ package com.example.compte.controller;
 import com.example.compte.exception.NotFoundException;
 import com.example.compte.model.Compte;
 import com.example.compte.service.CompteService;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
-@RequestMapping("compte")
+@RequestMapping("/compte")
 public class CompteController {
+	@Autowired
     private final CompteService compteService;
+	@Autowired
 
     public CompteController(CompteService compteService) {
         this.compteService = compteService;
@@ -41,19 +47,30 @@ public class CompteController {
     }
 
     //debiter le compte
-    @PutMapping("debiter/{id}/{solde}")
+    @PutMapping("/debiter/{id}/{solde}")
     public ResponseEntity<Compte> updateCompte(@PathVariable("id") Long id,@PathVariable("solde") float solde){
        Compte compte= compteService.debiterCompte(id,solde);
         return new ResponseEntity<>(compte,HttpStatus.OK);
     }
     //crediter le compte
-    @PutMapping("crediter/{id}/{solde}")
+    @PutMapping("/crediter/{id}/{solde}")
     public ResponseEntity<Compte> crediterCompte(@PathVariable("id") Long id,@PathVariable("solde") float solde){
         Compte compte= compteService.crediterCompte(id,solde);
         return new ResponseEntity<>(compte,HttpStatus.OK);
     }
 
 
+    @GetMapping("/getBackoffice")
+    public ResponseEntity<Compte> findCompteByNom(){
+        Compte compte=compteService.findCompteByNom("backoffice");
+        return new ResponseEntity<>(compte,HttpStatus.OK);
+    }
+    
+    @PutMapping("/updateSolde/{nomClient}")
+	public ResponseEntity<Compte> updateSolde(@PathVariable("nomClient") String nomClient,@RequestParam(required = true) float solde){
+    	Compte compte=compteService.updateAccount(nomClient, solde);
+  return new ResponseEntity<>(compte, HttpStatus.OK);
 
+}
 
 }

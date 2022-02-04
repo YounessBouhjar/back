@@ -3,6 +3,9 @@ package com.example.compte.service;
 import com.example.compte.exception.NotFoundException;
 import com.example.compte.model.Compte;
 import com.example.compte.repository.CompteRepository;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,6 +14,8 @@ import java.util.Random;
 
 @Service
 public class CompteService {
+	@Autowired
+
     private final CompteRepository compteRepository;
 
     public CompteService(CompteRepository compteRepository) {
@@ -67,17 +72,25 @@ public class CompteService {
         Compte compte=compteRepository.findCompteById(id);
         float newSolde=compte.getSolde()-solde;
         compte.setSolde(newSolde);
-        compteRepository.save(compte);
-        return compte;
+        return compteRepository.save(compte);
     }
     ///debiter le compte
     public Compte debiterCompte(Long id,float solde){
         Compte compte=compteRepository.findCompteById(id);
         float newSolde=compte.getSolde()+solde;
         compte.setSolde(newSolde);
-        compteRepository.save(compte);
-        return compte;
+        return compteRepository.save(compte);
+         
     }
 
-
+    public Compte findCompteByNom(String nomClient) {
+        return compteRepository.findCompteBynomClient(nomClient);
+    }
+    
+    
+    public Compte updateAccount(String nomClient,float solde){
+    	Compte compte= compteRepository.findCompteBynomClient(nomClient);        
+    	compte.setSolde(solde);
+        return compteRepository.save(compte);
+    }
 }

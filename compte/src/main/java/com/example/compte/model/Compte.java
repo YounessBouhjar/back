@@ -14,13 +14,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class Compte {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private Long id;
     private String numCompte;
     private float solde;
-    @Column(nullable = false)
     private String nomClient;
-    @Column(nullable = false)
     private String typeCompte;
     private LocalDateTime createAt;
 
