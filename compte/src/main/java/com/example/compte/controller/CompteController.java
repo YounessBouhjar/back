@@ -72,5 +72,9 @@ public class CompteController {
   return new ResponseEntity<>(compte, HttpStatus.OK);
 
 }
-
+    @GetMapping("/findClient/{idClient}")
+    public ResponseEntity<List<Compte>> getCompteByIdClient(@PathVariable("idClient") Long idClient){
+        List<Compte> compte=compteService.findClientByIdClient(idClient);
+        return new ResponseEntity<>(compte,HttpStatus.OK);
+    }
 }

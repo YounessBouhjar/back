@@ -104,6 +104,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.GET,"/client/beneficiaire/all").permitAll()	//benef client
 			.antMatchers(HttpMethod.PUT,"/client/updateClient/{clientId}").permitAll()	//benef client
 			.antMatchers(HttpMethod.GET,"/client/findid/{id}").permitAll()	//benef client
+			.antMatchers(HttpMethod.DELETE,"/client/delete/{id}").permitAll()	//benef client
+			.antMatchers(HttpMethod.PUT,"/client/updateClient").permitAll()	//benef client
 
 
 			.and()

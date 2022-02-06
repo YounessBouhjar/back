@@ -67,32 +67,26 @@ public class AgentService {
         return id;
     }
 
- //   public Agent updateAgent(Long id,Agent agent) throws AgentNotFoundException {
-   //     Agent agentFromDB = agentRepository.findById(id).orElse(null);
-     //   if (agentFromDB == null)
-       //     throw new AgentNotFoundException("aucun agent avec cette id");
-       // agent.setPassword(new BCryptPasswordEncoder().encode(agent.getPassword()));
-       // return agentRepository.save(agentFromDB);
-    //}
+
     
+//    public Agent updateAgent(Long id,Agent agent) throws , AgentDuplicatedException
+//	{
+//		Agent updated = agentRepository.findById(id).orElseThrow(() -> new AgentNotFoundException("Aucun agent avec l'id "+id+" trouvé"));
+//		
+//		if(agentRepository.findAgentByEmail(agent.getEmail()) != null) throw new AgentDuplicatedException(" Agent existe deja");
+//
+//		return agentRepository.save(updated);
+//
+//	}
+
     
-    public Agent updateAgent(Long id,Agent agent) throws AgentNotFoundException, AgentDuplicatedException
-	{
-		Agent updated = agentRepository.findById(id).orElseThrow(() -> new AgentNotFoundException("Aucun agent avec l'id "+id+" trouvé"));
-		
-		//verifier l'unicité du nouveau username
-		if(agentRepository.findAgentByEmail(agent.getEmail()) != null) throw new AgentDuplicatedException(" Agent existe deja");
-
-
-		if(agent.getNom()!=null && !agent.getNom().isEmpty()) updated.setNom(agent.getNom());
-		if(agent.getPrenom()!=null && !agent.getPrenom().isEmpty()) updated.setPrenom(agent.getPrenom());
-		if(agent.getEmail()!=null && !agent.getEmail().isEmpty()) updated.setEmail(agent.getEmail());
-		if(agent.getPassword()!=null && !agent.getPassword().isEmpty()) updated.setPassword(new BCryptPasswordEncoder().encode(agent.getPassword()));
-		
-		return agentRepository.save(updated);
-
-	}
-
+    public Agent updateAgent(Agent agent) throws AgentNotFoundException {
+    	Agent agentFromDB = agentRepository.findById(agent.getId()).orElse(null);
+        if (agentFromDB == null)
+            throw new AgentNotFoundException(agent.getId());
+        agent.setId(agentFromDB.getId());
+        return agentRepository.save(agent);
+    }
 
 
 }

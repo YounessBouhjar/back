@@ -1,8 +1,10 @@
 package com.example.agent.controller;
 
+import com.example.agent.beans.ClientBean;
 import com.example.agent.beans.CompteBean;
 import com.example.agent.exception.AgentNotFoundException;
 import com.example.agent.model.Agent;
+import com.example.agent.proxies.MicroserviceClientProxy;
 import com.example.agent.proxies.MicroserviceCompteProxy;
 import com.example.agent.service.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +14,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/agent")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 
 public class AgentController {
     private final AgentService agentService;
     @Autowired
     MicroserviceCompteProxy microserviceCompteProxy;
 
+    @Autowired
+    MicroserviceClientProxy microserviceClientProxy;
     public AgentController(AgentService agentService) {
         this.agentService = agentService;
     }
@@ -53,11 +58,15 @@ public class AgentController {
         Agent newAgent = agentService.addAgent(agent);
         return new ResponseEntity<Agent>(newAgent,HttpStatus.CREATED);
     }
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Agent> updateAgent(@PathVariable Long id ,@RequestBody Agent agent) throws Exception {
-        Agent updateAgent = agentService.updateAgent(id,agent);
-        return new ResponseEntity<Agent>(updateAgent, HttpStatus.OK);
+	@PutMapping("/update")
+    public ResponseEntity<?> update( @RequestBody Agent agent) throws Exception {
+        if (agent == null)
+            return ResponseEntity.badRequest().body("The provided agent is not valid");
+        return ResponseEntity
+                .ok()
+                .body(agentService.updateAgent(agent));
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Agent> deleteAgent(@PathVariable("id") Long id) throws Exception{
@@ -90,5 +99,33 @@ public class AgentController {
         return microserviceCompteProxy.updateCompte(id,solde);
     }
 
-
+    @GetMapping("/client/all")
+    public ResponseEntity<List<ClientBean>> getAllClients () {
+		return microserviceClientProxy.getAllClients();
+    }
+    @PostMapping("/client/add")
+    public ResponseEntity<ClientBean> addClient(@RequestBody ClientBean client){
+    	return microserviceClientProxy.addClient(client);
+    }
+    
+    @DeleteMapping("/client/delete/{id}")
+    public ResponseEntity<ClientBean> deleteClient(@PathVariable("id") Long id){
+    	return microserviceClientProxy.deleteClient(id);
+    }
+    
+    @GetMapping("/compte/findClient/{idClient}")
+    public ResponseEntity<List<CompteBean>> getCompteByIdClient(@PathVariable("idClient") Long idClient){
+    	return microserviceCompteProxy.getCompteByIdClient(idClient);
+    }
+    
+    
+    @PutMapping("/client/updateClient")
+    public ResponseEntity<?> updateClient( @RequestBody ClientBean client){
+    	return microserviceClientProxy.updateClient(client);
+    }
+	 
+	 @GetMapping("/client/findid/{id}")
+	    public ResponseEntity<ClientBean> findClientById(@PathVariable("id") Long id){
+		 return microserviceClientProxy.findClientById(id);
+	 }
 }

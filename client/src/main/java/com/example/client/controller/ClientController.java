@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
@@ -58,10 +59,20 @@ public class ClientController {
     }
 
     
-    @PutMapping("/updateClient/{clientId}")
-    public ResponseEntity<Client> updateClient(@PathVariable("clientId")Long clientId,@RequestBody Client client) throws Exception {
-    	Client updateClient = clientService.updateClient(clientId,client);
-        return new ResponseEntity<>(updateClient, HttpStatus.OK);
+	@PutMapping("/updateClient")
+    public ResponseEntity<?> updateClient( @RequestBody Client client) throws Exception {
+        if (client == null)
+            return ResponseEntity.badRequest().body("The provided client is not valid");
+        return ResponseEntity
+                .ok()
+                .body(clientService.updateClient(client));
+    }
+    
+    
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Client> deleteClient(@PathVariable("id") Long id) throws Exception{
+    	clientService.deleteClient(id);
+        return new ResponseEntity<Client>(HttpStatus.OK);
     }
     
     

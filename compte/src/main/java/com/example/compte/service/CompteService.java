@@ -93,4 +93,8 @@ public class CompteService {
     	compte.setSolde(solde);
         return compteRepository.save(compte);
     }
+    
+    public List<Compte> findClientByIdClient(Long id){
+        return compteRepository.findCompteByIdClient(id);
+    }
 }

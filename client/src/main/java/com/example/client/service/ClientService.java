@@ -1,6 +1,8 @@
 package com.example.client.service;
 
 
+
+
 import com.example.client.exception.ClientNotFoundException;
 import com.example.client.model.Client;
 import com.example.client.repository.ClientRepository;
@@ -36,8 +38,8 @@ public class ClientService {
     public Client findClientByCin(String cin){
         return clientRepository.findBycin(cin);
     }
-    public Client updateClient(Long id,Client client)throws ClientNotFoundException {
-    	Client clientFromDB = clientRepository.findByClientId(id);
+    public Client updateClient(Client client)throws ClientNotFoundException {
+    	Client clientFromDB = clientRepository.findById(client.getClientId()).orElse(null);
         if (clientFromDB == null)
             throw new ClientNotFoundException("aucun client avec cette id");
         client.setClientId(clientFromDB.getClientId());
@@ -45,6 +47,15 @@ public class ClientService {
         return clientRepository.save(client);
     }
     
+
+    
+    
+    public Long deleteClient(Long id)  {
+        Client clt = clientRepository.findByClientId(id);
+        clientRepository.delete(clt);
+        return id;
+    }
+
     
    
 }

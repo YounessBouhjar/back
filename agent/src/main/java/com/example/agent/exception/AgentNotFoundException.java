@@ -8,4 +8,8 @@ public class AgentNotFoundException extends RuntimeException {
     public AgentNotFoundException(String message) {
         super(message);
     }
+
+	public AgentNotFoundException(Long id) {
+		// TODO Auto-generated constructor stub
+	}
 }

@@ -104,13 +104,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.authorizeRequests()
 
-			
+			.antMatchers("/agent").permitAll() 		//agent par username
+
 			.antMatchers(HttpMethod.GET,"/agent/agent/{email}").permitAll() 		//agent par username
 			.antMatchers(HttpMethod.GET,"/agent/all").permitAll()	//afficher agent
 			.antMatchers(HttpMethod.GET,"/agent/agentid/{id}").permitAll()	//afficher agent
 
 			.antMatchers(HttpMethod.POST,"/agent/add").permitAll()	//creer agent
-			.antMatchers(HttpMethod.PUT,"/agent/update/{id}").permitAll()	//modifier agent
+			.antMatchers(HttpMethod.PUT,"/agent/update").permitAll()	//modifier agent
 			.antMatchers(HttpMethod.DELETE,"/agent/delete/{id}").permitAll()	//supprimer agent
 
 			.antMatchers(HttpMethod.GET,"/agent/compte/all").permitAll() 		

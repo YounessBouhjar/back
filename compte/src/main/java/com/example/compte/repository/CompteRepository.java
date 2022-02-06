@@ -13,5 +13,7 @@ public interface CompteRepository extends JpaRepository<Compte,Long> {
     List<Compte> findCompteByNomClient(String nomClient);
     Compte findCompteById(Long id);
     Compte findCompteBynomClient(String nomClient);
+    List<Compte> findCompteByIdClient(Long id);
+
 
 }
