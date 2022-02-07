@@ -1,4 +1,4 @@
-package transfertnational.example.transfertnational.model;
+package com.example.agent.beans;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,16 +6,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-import javax.persistence.*;
-@Table(name= "transfert_national", schema = "targetSchemaName")
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransfertNational {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
+public class TransfertBean {
     private Long id;
     private Long idClient;
     private Long idAgent;
@@ -25,14 +19,12 @@ public class TransfertNational {
     private Long idCompte;
     private String status;
     private String codeTransfert;
+    private String dateTransfert;
     private float montant;
-    private Date dateTransfert;
     private int nombreJours;
     private String motif;
     private String motifTransfert;
     private String nomBenef;
     private String prenomBenef;
-    private Long idAdmin;
-
 
 }

@@ -71,16 +71,18 @@ public class TransfertNationalService {
         return transfertNationalRepository.save(transfertNational);
     }
 
-    public List<TransfertNational> GetTransfertNationalByIdAgentAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(
-    		Long idAgent,Long idClient,String pi,String numGsm ,String codeTransfert,String status){
-        return transfertNationalRepository.findTransfertNationalByIdAgentAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(
-        		idAgent, idClient,pi, numGsm, codeTransfert, status);
+    public List<TransfertNational> GetTransfertNationalByIdAdminAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(
+    		Long idAdmin,Long idClient,String pi,String numGsm ,String codeTransfert,String status){
+        return transfertNationalRepository.findTransfertNationalByIdAdminAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(
+        		idAdmin, idClient,pi, numGsm, codeTransfert, status);
     }
     public TransfertNational GetTransfertNationalByCodeTransfert(String codeTransfert){
         return transfertNationalRepository.findTransfertNationalByCodeTransfert(codeTransfert);
     }
     
-
+    public List<TransfertNational> GetTransfertNationalByIdAgent(Long id){
+        return transfertNationalRepository.findTransfertNationalByIdAgent(id);
+    }
     
     public TransfertNational updateTransfert(String codeTransfert,String status,String motif){
         TransfertNational transfertNational= transfertNationalRepository.findTransfertNationalByCodeTransfert(codeTransfert);        

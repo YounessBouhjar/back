@@ -18,8 +18,8 @@ public class TransfertRepositoryCustomImpl implements TransfertRepositoryCustom 
     private EntityManager entityManager;
 
     @Override
-    public List<TransfertNational> findTransfertNationalByIdAgentAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(
-    		Long idAgent,Long idClient,String pi,String numGsm ,
+    public List<TransfertNational> findTransfertNationalByIdAdminAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(
+    		Long idAdmin,Long idClient,String pi,String numGsm ,
    		 String codeTransfert,String status)
     	 {
     	CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -27,8 +27,8 @@ public class TransfertRepositoryCustomImpl implements TransfertRepositoryCustom 
         Root<TransfertNational> transferts = query.from(TransfertNational.class);
 
         List<Predicate> predicates = new ArrayList<Predicate>();
-        if (idAgent != null)
-            predicates.add(cb.equal(transferts.get("idAgent"), idAgent));
+        if (idAdmin != null)
+            predicates.add(cb.equal(transferts.get("idAgent"), idAdmin));
         
         
         if (idClient != null)

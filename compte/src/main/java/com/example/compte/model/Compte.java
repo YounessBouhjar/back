@@ -21,5 +21,6 @@ public class Compte {
     private String typeCompte;
     private LocalDateTime createAt;
     private Long idClient;
-
+    private Long idAgent;
+    private Long idAdmin;
 }

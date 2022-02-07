@@ -77,4 +77,21 @@ public class CompteController {
         List<Compte> compte=compteService.findClientByIdClient(idClient);
         return new ResponseEntity<>(compte,HttpStatus.OK);
     }
+
+    @GetMapping("/findAgent/{idAgent}")
+    public ResponseEntity<Compte> getCompteByIdAgent(@PathVariable("idAgent") Long idAgent){
+        Compte compte=compteService.findClientByIdAgent(idAgent);
+        return new ResponseEntity<>(compte,HttpStatus.OK);
+    }
+    @GetMapping("/findAdmin/{idAdmin}")
+    public ResponseEntity<Compte> getCompteByIdAdmin(@PathVariable("idAdmin") Long idAdmin){
+        Compte compte=compteService.findClientByIdAdmin(idAdmin);
+        return new ResponseEntity<>(compte,HttpStatus.OK);
+    }
+    @PutMapping("/updateSold/{idAgent}")
+   	public ResponseEntity<Compte> updateSol(@PathVariable("idAgent") Long idAgent,@RequestParam(required = true) float solde){
+       	Compte compte=compteService.updateAcc(idAgent, solde);
+     return new ResponseEntity<>(compte, HttpStatus.OK);
+
+   }
 }

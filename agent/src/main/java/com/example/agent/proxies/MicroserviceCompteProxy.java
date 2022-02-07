@@ -26,4 +26,15 @@ public interface MicroserviceCompteProxy{
     @GetMapping("/compte/findClient/{idClient}")
     public ResponseEntity<List<CompteBean>> getCompteByIdClient(@PathVariable("idClient") Long idClient);
 
+    @GetMapping("/compte/findAgent/{idAgent}")
+    public ResponseEntity<CompteBean> getCompteByIdAgent(@PathVariable("idAgent") Long idAgent);
+
+    @GetMapping("/compte/findAdmin/{idAdmin}")
+    public ResponseEntity<CompteBean>getCompteByIdAdmin(@PathVariable("idAdmin") Long idAdmin);
+    @PutMapping("/compte/updateSolde/{nomClient}")
+	public ResponseEntity<CompteBean> updateSolde(@PathVariable("nomClient") String nomClient,@RequestParam(required = true) float solde);
+
+    @PutMapping("/compte/updateSold/{idAgent}")
+	public ResponseEntity<CompteBean> updateSol(@PathVariable("idAgent") Long idAgent,@RequestParam(required = true) float solde);
+
 }

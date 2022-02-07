@@ -1,11 +1,14 @@
 package com.example.agent.controller;
 
+import com.example.agent.beans.NotificationBean;
 import com.example.agent.beans.ClientBean;
 import com.example.agent.beans.CompteBean;
+import com.example.agent.beans.TransfertBean;
 import com.example.agent.exception.AgentNotFoundException;
 import com.example.agent.model.Agent;
 import com.example.agent.proxies.MicroserviceClientProxy;
 import com.example.agent.proxies.MicroserviceCompteProxy;
+import com.example.agent.proxies.MicroserviceTransfertProxy;
 import com.example.agent.service.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 
 @RestController
@@ -23,6 +27,8 @@ public class AgentController {
     private final AgentService agentService;
     @Autowired
     MicroserviceCompteProxy microserviceCompteProxy;
+    @Autowired
+    MicroserviceTransfertProxy microserviceTransfertProxy;
 
     @Autowired
     MicroserviceClientProxy microserviceClientProxy;
@@ -128,4 +134,50 @@ public class AgentController {
 	    public ResponseEntity<ClientBean> findClientById(@PathVariable("id") Long id){
 		 return microserviceClientProxy.findClientById(id);
 	 }
+
+	 @GetMapping("/compte/findAgent/{idAgent}")
+	    public ResponseEntity<CompteBean> getCompteByIdAgent(@PathVariable("idAgent") Long idAgent){
+	    	return microserviceCompteProxy.getCompteByIdAgent(idAgent);
+	    }
+	 @GetMapping("/compte/findAdmin/{idAdmin}")
+	    public ResponseEntity<CompteBean> getCompteByIdAdmin(@PathVariable("idAdmin") Long idAdmin){
+	    	return microserviceCompteProxy.getCompteByIdAdmin(idAdmin);
+	    }
+	 
+	 @GetMapping("transfert/findAgent/{id}")
+	    public ResponseEntity<List<TransfertBean>> getTransfertByIdAgent(@PathVariable("id") Long id) {
+		return microserviceTransfertProxy.getTransfertByIdAgent(id);
+	}
+	 
+	 @GetMapping("/client/findcin/{cin}")
+	    public ResponseEntity<ClientBean> findClientByCin(@PathVariable("cin") String cin){
+		 return microserviceClientProxy.findClientByCin(cin);
+	 }
+	  @PostMapping("/transfert/add")
+	    public ResponseEntity<TransfertBean> addtransfert(@RequestBody TransfertBean transfert){
+	    	return microserviceTransfertProxy.addtransfert(transfert);
+	    }
+	  @PutMapping("/compte/updateSolde/{nomClient}")
+		public ResponseEntity<CompteBean> updateSolde(@PathVariable("nomClient") String nomClient,@RequestParam(required = true) float solde){
+	    	return microserviceCompteProxy.updateSolde(nomClient, solde);
+	    }
+	    @PostMapping("/notification/send")
+	    public void sendSms( @RequestBody NotificationBean smsRequest) {
+
+	    }
+	    
+	    @PutMapping("/compte/updateSold/{idAgent}")
+		public ResponseEntity<CompteBean> updateSol(@PathVariable("idAgent") Long idAgent,@RequestParam(required = true) float solde){
+	    	return microserviceCompteProxy.updateSol(idAgent, solde);
+	}
+	    @GetMapping("/transfert/find/{codetransfert}")
+		public ResponseEntity<TransfertBean> getTransfertByCodeTransfert(@PathVariable("codetransfert") String codeTransfert){
+	    	return microserviceTransfertProxy.getTransfertByCodeTransfert(codeTransfert);
+	    
+	    }
+	    @PutMapping("/transfert/status/{codeTransfert}")
+		public ResponseEntity<TransfertBean> updateTransfert(@PathVariable("codeTransfert") String codeTransfert,@RequestParam(required = true) String status,@RequestParam(required = true) String motif){
+	    	return microserviceTransfertProxy.updateTransfert(codeTransfert, status, motif);
+	    }
+		
 }

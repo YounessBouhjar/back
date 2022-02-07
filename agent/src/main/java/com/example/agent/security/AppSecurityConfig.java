@@ -97,7 +97,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().defaultSuccessUrl("/agent/", true);
+        http.formLogin().defaultSuccessUrl("/", true);
 
 		http
 			.cors()

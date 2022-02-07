@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface TransfertRepositoryCustom {
 
-	    List<TransfertNational> findTransfertNationalByIdAgentAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(Long idAgent,Long idClient,String pi,String numGsm ,
+	    List<TransfertNational> findTransfertNationalByIdAdminAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(Long idAdmin,Long idClient,String pi,String numGsm ,
 	    		 String codeTransfert,String status);
 	
 }

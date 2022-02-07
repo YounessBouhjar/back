@@ -97,4 +97,17 @@ public class CompteService {
     public List<Compte> findClientByIdClient(Long id){
         return compteRepository.findCompteByIdClient(id);
     }
+    public Compte findClientByIdAgent(Long id){
+        return compteRepository.findCompteByIdAgent(id);
+    }
+    public Compte findClientByIdAdmin(Long id){
+        return compteRepository.findCompteByIdAdmin(id);
+    }
+    public Compte updateAcc(Long idAgent,float solde){
+    	Compte compte= compteRepository.findCompteByIdAgent(idAgent);        
+    	compte.setSolde(solde);
+        return compteRepository.save(compte);
+    }
+    
+    
 }

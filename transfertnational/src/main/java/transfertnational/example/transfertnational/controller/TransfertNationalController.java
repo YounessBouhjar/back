@@ -105,20 +105,20 @@ public class TransfertNationalController {
 
     @PostMapping("/tranSearch")
     public ResponseEntity<List<TransfertNational>> getTransCrit (    		
-    		@RequestParam(required = false) Long idAgent,
+    		@RequestParam(required = false) Long idAdmin,
     		@RequestParam(required = false) Long idClient,
     		@RequestParam(required = false) String pi,
     		@RequestParam(required = false) String numGsm,
     		@RequestParam(required = false) String codeTransfert,
     		@RequestParam(required = false) String status) {
-        List<TransfertNational> transferts=transfertNationalService.GetTransfertNationalByIdAgentAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(idAgent, idClient, pi, numGsm, codeTransfert, status);
+        List<TransfertNational> transferts=transfertNationalService.GetTransfertNationalByIdAdminAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(idAdmin, idClient, pi, numGsm, codeTransfert, status);
         return new ResponseEntity<>(transferts, HttpStatus.OK);
     }
 
     
     @GetMapping("/export/excel")
     public ResponseEntity<List<TransfertNational>> exportToExcel(HttpServletResponse response,    		
-    		@RequestParam(required = false) Long idAgent,
+    		@RequestParam(required = false) Long idAdmin,
     		@RequestParam(required = false) Long idClient,
     		@RequestParam(required = false) String pi,
     		@RequestParam(required = false) String numGsm,
@@ -132,7 +132,7 @@ public class TransfertNationalController {
         String headerValue = "attachment; filename=transferts_" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
          
-        List<TransfertNational> listTransferts = transfertNationalService.GetTransfertNationalByIdAgentAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(idAgent, idClient, pi, numGsm, codeTransfert, status);
+        List<TransfertNational> listTransferts = transfertNationalService.GetTransfertNationalByIdAdminAndIdClientAndPiAndNumGsmAndCodeTransfertAndStatus(idAdmin, idClient, pi, numGsm, codeTransfert, status);
          
         TransfertExcelExporter excelExporter = new TransfertExcelExporter(listTransferts);
          
@@ -154,6 +154,11 @@ public class TransfertNationalController {
     	TransfertNational transfertNational=transfertNationalService.updateTransfert(codeTransfert,status,motif);
       return new ResponseEntity<>(transfertNational, HttpStatus.OK);
   
+    }
+    @GetMapping("/findAgent/{id}")
+    public ResponseEntity<List<TransfertNational>> getTransfertByIdAgent(@PathVariable("id") Long id) {
+    	List<TransfertNational> transferts=transfertNationalService.GetTransfertNationalByIdAgent(id);
+        return new ResponseEntity<>(transferts, HttpStatus.OK);
     }
     
 }
