@@ -113,7 +113,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.csrf().disable()
 			;
-			
+		http.cors().disable()
+		;
 		
 		
 		super.configure(http);

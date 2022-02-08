@@ -21,7 +21,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/agent")
-@CrossOrigin(origins = "http://localhost:4200")
 
 public class AgentController {
     private final AgentService agentService;

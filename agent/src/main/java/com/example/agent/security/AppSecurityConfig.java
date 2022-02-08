@@ -1,6 +1,7 @@
 package com.example.agent.security;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -75,21 +76,12 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		configuration.setAllowedMethods(ImmutableList.of("HEAD",
 				"GET", "POST", "PUT", "DELETE", "PATCH"));
-		configuration.setAllowedHeaders(ImmutableList.of("accept",
-				"accept-encoding",
-				"authorization",
-				"content-type",
-				"dnt",
-				"origin",
-				"user-agent",
-				"x-csrftoken",
-				"x-requested-with"));
+		configuration.setAllowedHeaders(Arrays.asList("*"));
 		// setAllowCredentials(true) is important, otherwise:
 		// The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
 		configuration.setAllowCredentials(true);
 		// setAllowedHeaders is important! Without it, OPTIONS preflight request
 		// will fail with 403 Invalid CORS request
-		configuration.setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 		return source;
@@ -124,7 +116,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.csrf().disable()
 			;
-			
+			http.cors().disable();
 		
 		
 		super.configure(http);

@@ -1,0 +1,66 @@
+server:
+  port: 9191
+
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**
+        - id: agent-service
+          uri: lb://agent-service
+          predicates:
+            - Path=/agent/**
+        - id: client-service
+          uri: lb://client-service
+          predicates:
+            - Path=/client/**
+        - id: beneficiaire-service
+          uri: lb://beneficiaire-service
+          predicates:
+            - Path=/beneficiaire/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/notification/**
+        - id: transfert-service
+          uri: lb://transfert-service
+          predicates:
+            - Path=/transfert/**
+        - id: compte-service
+          uri: lb://compte-service
+          predicates:
+            - Path=/compte/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+              allowedOrigins: "*"
+              allowedHeaders: "*"
+              allowedMethods:
+                - GET
+                - POST
+                - PUT
+                - DELETE
+    config:
+      server:
+        git:
+          uri: https://github.com/soukainabouzayan/mircroservices-springboot.git
+          default-label: main
+          clone-on-start: true
+          force-pull: true
+          searchPaths: myapp
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
